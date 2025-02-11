@@ -1,0 +1,115 @@
+{% extends "inicio.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Crear Nuevo Proyecto</h1>
+    <div class="card shadow-lg p-4">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_nombre" class="form-label">Nombre del Proyecto</label>
+                {{ form.nombre }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_descripcion" class="form-label">Descripción</label>
+                {{ form.descripcion }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_costo_total" class="form-label">Costo Total</label>
+                {{ form.costo_total }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_costo_mensual" class="form-label">Costo Mensual</label>
+                {{ form.costo_mensual }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_espacio" class="form-label">Espacio</label>
+                {{ form.espacio }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_estado" class="form-label">Estado</label>
+                {{ form.estado }}
+            </div>
+
+            <!-- Campo de Evidencia con Bootstrap Fileinput -->
+            <div class="mb-3">
+                <label for="id_foto" class="form-label">Foto:</label>
+                <input id="id_foto" name="foto" type="file" class="file" data-show-upload="false" data-show-caption="true">
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4">Crear Proyecto</button>
+                <a href="{% url 'lista_proyectos' %}" class="btn btn-secondary px-4">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Estilos Personalizados -->
+<style>
+    body {
+        background-color: #f9f9f9;
+        font-family: 'Arial', sans-serif;
+    }
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3e4451;
+    }
+    .container {
+        max-width: 700px;
+    }
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+    .form-label {
+        font-weight: bold;
+        color: #495057;
+    }
+    .form-control {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        // Verificar si el input ya tiene Fileinput antes de inicializarlo
+        if (!$("#id_foto").data('fileinput')) {
+            $("#id_foto").fileinput({
+                theme: "fas",
+                showUpload: false,
+                dropZoneEnabled: true,
+                allowedFileExtensions: ["jpg", "png", "pdf"],
+                maxFileSize: 2000,
+                maxFilesNum: 5,
+                previewFileType: "any",
+            });
+        }
+    });
+</script>
+{% endblock %}

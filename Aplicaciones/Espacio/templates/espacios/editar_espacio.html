@@ -1,0 +1,100 @@
+{% extends "inicio.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Editar Espacio</h1>
+    <div class="card shadow-lg p-4">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_nombre" class="form-label">Nombre</label>
+                {{ form.nombre }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_ubicacion" class="form-label">Ubicación</label>
+                {{ form.ubicacion }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_capacidad" class="form-label">Capacidad</label>
+                {{ form.capacidad }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_estado" class="form-label">Estado</label>
+                {{ form.estado }}
+            </div>
+            <div>
+                <label  class="form-label">Foto Actual:</label>
+                {% if espacio.foto %}
+                <a href="{{ espacio.foto.url }}" target="_blank">
+                    <img src="{{ espacio.foto.url }}" alt="foto" height="100" class="mb-2">
+                </a>
+                {% else %}
+                    <span class="text-muted">Sin foto</span>
+                {% endif %}
+            </div>
+
+            <!-- Campo de Evidencia con Bootstrap Fileinput -->
+            <div class="mb-3">
+                <label for="id_foto" class="form-label">Actualizar Foto:</label>
+                <input id="id_foto" name="foto" type="file" class="file" data-show-upload="false" data-show-caption="true">
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4">Guardar Cambios</button>
+                <a href="{% url 'lista_espacios' %}" class="btn btn-secondary px-4">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Estilos Personalizados -->
+<style>
+    body {
+        background-color: #f9f9f9;
+        font-family: 'Arial', sans-serif;
+    }
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3e4451;
+    }
+    .container {
+        max-width: 700px;
+    }
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+</style>
+
+<script>
+    $(document).ready(function(){
+        $("#id_foto").fileinput({
+            theme: "fas",
+            showUpload: false,
+            dropZoneEnabled: true,
+            allowedFileExtensions: ["jpg", "png", "pdf"],
+            maxFileSize: 2000,
+            maxFilesNum: 1,
+            previewFileType: "image",
+            initialPreview: imagenActual ? [imagenActual] : [],
+            initialPreviewAsData: true, // Muestra la imagen como preview
+            initialPreviewConfig: imagenActual ? [{caption: "Imagen actual", key: 1}] : []
+        });
+    });
+</script>
+{% endblock %}
